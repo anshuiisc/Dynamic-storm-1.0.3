@@ -75,7 +75,7 @@ public class OurCheckpointSpout extends CheckpointSpout {
             l.info("TEST:EMITTING_on_CHECKPOINT_STREAM just 1 init ......");
             recovering=true;
             recoveryStepInProgress=false;
-	    Utils.sleep(1000);
+//	        Utils.sleep(1000);
             super.nextTuple();  //TODO: call to nexttuple should be non blocking (once started) bcz ack will change state from PREPARE to COMMIT
             /*l.info("deleting_RECOVERSTATE_file");
 ////            TODO:logic to delete file
