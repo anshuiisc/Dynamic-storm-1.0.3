@@ -66,7 +66,7 @@ public class CheckpointSpout extends BaseRichSpout {
     private CheckPointState curTxState;
 
     Map<Long, EmittedMsgDetails> msgID_streamAction_map = new HashMap();
-
+    long chkptMsgid = 0;
     private static Logger l;
     public static void initLogger(Logger l_) {
         l = l_;
@@ -235,11 +235,14 @@ public class CheckpointSpout extends BaseRichSpout {
     }
 
     private void emit(long txid, Action action) {
-        OurCheckpointSpout.logTimeStamp(action + "_SENT," + System.currentTimeMillis());
+        chkptMsgid+=1;
+        OurCheckpointSpout.logTimeStamp(action + "_SENT,chkptMsgid,"+chkptMsgid+",txid,"+txid+"," + System.currentTimeMillis());
         LOG.debug("Current state {}, emitting txid {}, action {}", curTxState, txid, action);
-        collector.emit(CHECKPOINT_STREAM_ID, new Values(txid, action), txid);
+//        collector.emit(CHECKPOINT_STREAM_ID, new Values(txid, action), txid);
+//        msgID_streamAction_map.put(txid, new EmittedMsgDetails(CHECKPOINT_STREAM_ID, txid, action, txid));
+        collector.emit(CHECKPOINT_STREAM_ID, new Values(txid, action), chkptMsgid);
+        msgID_streamAction_map.put(chkptMsgid, new EmittedMsgDetails(CHECKPOINT_STREAM_ID, txid, action, chkptMsgid));
 
-        msgID_streamAction_map.put(txid, new EmittedMsgDetails(CHECKPOINT_STREAM_ID, txid, action, txid));
     }
 
     private void saveTxState(CheckPointState txState) {
