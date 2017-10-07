@@ -134,6 +134,7 @@ public class StatefulBoltExecutor<T extends State> extends BaseStatefulBoltExecu
         } else if (action == INITSTATE) {
             l.info("TEST_boltInitialized"+boltInitialized);
             if (!boltInitialized) {
+                OurCheckpointSpout.logTimeStamp("INIT_RECEIVED," + Thread.currentThread() + "," + System.currentTimeMillis());
                 bolt.initState((T) state);
                 boltInitialized = true;
                 LOG.debug("{} pending tuples to process", pendingTuples.size());
