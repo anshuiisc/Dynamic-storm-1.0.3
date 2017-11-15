@@ -54,8 +54,8 @@ import org.slf4j.LoggerFactory;
  * </pre>
  * </p>
  */
-public class FooDiamondParseTopology {
-    private static final Logger LOG = LoggerFactory.getLogger(FooDiamondParseTopology.class);
+public class FooDiamondParseTopologySleep {
+    private static final Logger LOG = LoggerFactory.getLogger(FooDiamondParseTopologySleep.class);
 
     public static void main(String[] args) throws Exception {
 
@@ -80,12 +80,12 @@ public class FooDiamondParseTopology {
         //        builder.setSpout("spout", new OurRandomIntegerWithCHKPTSpout());
 //        builder.setSpout("spout", new fooRandomIntegerWithCHKPTSpout());
 
-        builder.setBolt("fooPartial2", new fooXMLParser("2"), 1).shuffleGrouping("spout","datastream");
-        builder.setBolt("fooPartial3", new fooXMLParser("3"), 1);
-        builder.setBolt("fooPartial4", new fooXMLParser("4"), 1);
-        builder.setBolt("fooPartial5", new fooXMLParser("5"), 1);
+        builder.setBolt("fooPartial2", new fooSleep("2"), 1).shuffleGrouping("spout","datastream");
+        builder.setBolt("fooPartial3", new fooSleep("3"), 1).shuffleGrouping("spout","datastream");
+        builder.setBolt("fooPartial4", new fooSleep("4"), 1).shuffleGrouping("spout","datastream");
+        builder.setBolt("fooPartial5", new fooSleep("5"), 1).shuffleGrouping("spout","datastream");
 
-        builder.setBolt("fooPartial6", new fooXMLParser("6"), 4)
+        builder.setBolt("fooPartial6", new fooSleep("6"), 4)
                 .shuffleGrouping("fooPartial2")
                 .shuffleGrouping("fooPartial3")
                 .shuffleGrouping("fooPartial4")
