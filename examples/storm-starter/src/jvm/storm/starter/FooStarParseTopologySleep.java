@@ -81,7 +81,7 @@ public class FooStarParseTopologySleep {
 //        builder.setSpout("spout", new fooRandomIntegerWithCHKPTSpout());
 
         builder.setBolt("fooPartial2", new fooSleep("2"), 1).shuffleGrouping("spout","datastream");
-        builder.setBolt("fooPartial3", new fooSleep("3"), 1);
+        builder.setBolt("fooPartial3", new fooSleep("3"), 1).shuffleGrouping("spout","datastream");;
 
         builder.setBolt("fooPartial4", new fooSleep("4"), 2)
                 .shuffleGrouping("fooPartial2")

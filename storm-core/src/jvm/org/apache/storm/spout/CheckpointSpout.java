@@ -240,6 +240,8 @@ public class CheckpointSpout extends BaseRichSpout {
         collector.emit(CHECKPOINT_STREAM_ID, new Values(txid, action), txid);
 
         msgID_streamAction_map.put(txid, new EmittedMsgDetails(CHECKPOINT_STREAM_ID, txid, action, txid));
+        if(action.name().equals("INITSTATE"))  // FIXME:ERIC_TEST
+            Utils.sleep(100);
     }
 
     private void saveTxState(CheckPointState txState) {
