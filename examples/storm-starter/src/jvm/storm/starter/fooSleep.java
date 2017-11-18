@@ -65,7 +65,7 @@ public class fooSleep extends OurStatefulBoltByteArrayTuple<String,List<byte[]>>
 //        l.info("Added_tuples_to_redisTuples_"+input.getValueByField("MSGID"));
 //        kvstate.put("redisTuples", redisTuples);
         Values out=  new Values(upVal,input.getValueByField("MSGID").toString());
-        Utils.sleep(10000);
+        Utils.sleep(100);
 //        emit(input,out);
         collector.emit(out);
 
